@@ -33,6 +33,10 @@ namespace Bojechki_server.Handlers
                             case "GET_ORDERS": response = DbTablesHandler.HandleGetOrders(db); break;
                             case "LOGIN": response = LoginHandler.HandleLogin(db, parts); break;
                             case "REGISTER": response = RegisterHandler.HandleRegister(db, parts); break;
+                            case "ADD_COMPONENT": response = DbTablesHandler.HandleAddComponent(db, parts); break;
+                            case "UPDATE_COMPONENT": response = DbTablesHandler.HandleUpdateComponent(db, parts); break;
+                            case "DELETE_COMPONENT": response = DbTablesHandler.HandleDeleteComponent(db, parts); break;
+                            case "SEARCH_COMPONENTS": response = DbTablesHandler.HandleSearchComponents(db, parts); break;
                             default: response = "UNKNOWN_COMMAND"; break;
                         }
                     }
@@ -44,7 +48,7 @@ namespace Bojechki_server.Handlers
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Ошибка при обмене: {ex.Message}");
+                Console.WriteLine($"Ошибка при обмене: {ex.Message} {ex.InnerException}");
             }
             finally
             {

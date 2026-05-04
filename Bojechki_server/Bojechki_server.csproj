@@ -157,7 +157,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database.cs" />
+    <Compile Include="Database\Catalog.cs" />
+    <Compile Include="Database\Client.cs" />
+    <Compile Include="Database\Component.cs" />
+    <Compile Include="Database\Finances.cs" />
+    <Compile Include="Database\AppDbContext.cs" />
+    <Compile Include="Database\Order.cs" />
+    <Compile Include="Database\Order_Component.cs" />
     <Compile Include="Handlers\ClientHandler.cs" />
     <Compile Include="Handlers\DbTablesHandler.cs" />
     <Compile Include="Handlers\LoginHandler.cs" />

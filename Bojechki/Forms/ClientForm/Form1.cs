@@ -9,12 +9,16 @@ using System.IO;
 using System.Net.Sockets;
 using System.Text;
 using System.Windows.Forms;
+using Bojechki.Services;
+using Bojechki.Models;
+using Component = Bojechki.Models.Component;
+using Bojechki.Forms.ClientForm;
 
 namespace Bojechki
 {
     public partial class Form1 : Form
     {
-        private string connectionString;
+        private string connectionString = $@"Data Source=(localdb)\v13.0;Initial Catalog=bog;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
         private Process serverProcess;
 
         public Form1()
@@ -37,31 +41,9 @@ namespace Bojechki
             }
         }
 
-        private void LoadData(string query)
-        {
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
-                    {
-                        DataTable table = new DataTable();
-                        adapter.Fill(table);
-                        dataGridView1.DataSource = table;
-                        dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ошибка подключения: " + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
         private void btnLoadClients_Click(object sender, EventArgs e)
         {
-            string jsonResponse = SendRequestToServer("GET_CLIENTS");
+            string jsonResponse = ServerConnection.SendRequestToServer("GET_CLIENTS");
 
             if (jsonResponse != "UNKNOWN_COMMAND" && !jsonResponse.StartsWith("Ошибка"))
             {
@@ -77,7 +59,7 @@ namespace Bojechki
 
         private void btnLoadComponents_Click(object sender, EventArgs e)
         {
-            string jsonResponse = SendRequestToServer("GET_COMPONENTS");
+            string jsonResponse = ServerConnection.SendRequestToServer("GET_COMPONENTS");
 
             if (jsonResponse != "UNKNOWN_COMMAND" && !jsonResponse.StartsWith("Ошибка"))
             {
@@ -92,9 +74,7 @@ namespace Bojechki
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
-        {
-            string dbFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "божечки.mdf");
-            string connectionString = $@"Data Source=(LocalDB)\v13.0;AttachDbFilename=""{dbFilePath}"";Initial Catalog=BojechkiDB;Integrated Security=True;";
+        {            
             string searchText = txtSearch.Text.Trim();
             string query = "";
 
@@ -133,35 +113,50 @@ namespace Bojechki
             }
         }
 
-        public string SendRequestToServer(string message)
+        private void btnAddComponent_Click(object sender, EventArgs e)
         {
-            try
+            AddComponent addComponent = new AddComponent();
+            addComponent.ComponentAdded += () => RefreshComponentsGrid();
+            addComponent.Show();
+        }
+
+        private void btnDeleteComponent_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count == 0) return;
+            int id = (int)dataGridView1.SelectedRows[0].Cells["Id"].Value;
+            if (MessageBox.Show("Удалить?", "Подтверждение", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                using (TcpClient client = new TcpClient("127.0.0.1", 13000))
-                using (NetworkStream stream = client.GetStream())
-                {
-                    byte[] requestData = Encoding.UTF8.GetBytes(message);
-                    stream.Write(requestData, 0, requestData.Length);
-
-                    using (MemoryStream ms = new MemoryStream())
-                    {
-                        byte[] buffer = new byte[8192];
-                        int bytesRead;
-
-                        while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
-                        {
-                            ms.Write(buffer, 0, bytesRead);
-                        }
-
-                        return Encoding.UTF8.GetString(ms.ToArray());
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                return $"Ошибка сети: {ex.Message}";
+                string response = ServerConnection.SendRequestToServer($"DELETE_COMPONENT|{id}");
+                if (response == "SUCCESS") RefreshComponentsGrid();
+                else MessageBox.Show(response);
             }
         }
 
+        private void btnUpdateComponent_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Выбери товар для редактирования"); 
+                return;
+            }
+
+            Component component = (Component)dataGridView1.SelectedRows[0].DataBoundItem;
+            if (component == null) return;
+
+            using (var editForm = new EditComponent(component))
+            {
+                if (editForm.ShowDialog() == DialogResult.OK)
+                {
+                    RefreshComponentsGrid();
+                }
+            }
+        }
+
+        private void RefreshComponentsGrid()
+        {
+            string json = ServerConnection.SendRequestToServer("GET_COMPONENTS");
+            var components = JsonConvert.DeserializeObject<List<Component>>(json);
+            dataGridView1.DataSource = components;
+        }
     }
 }

@@ -125,9 +125,9 @@
             // 
             // textBox5
             // 
-            this.textBox5.Location = new System.Drawing.Point(312, 208);
+            this.textBox5.Location = new System.Drawing.Point(377, 208);
             this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(201, 20);
+            this.textBox5.Size = new System.Drawing.Size(136, 20);
             this.textBox5.TabIndex = 16;
             this.textBox5.TextChanged += new System.EventHandler(this.textBox5_TextChanged);
             // 
@@ -142,17 +142,11 @@
             // 
             // comboBox1
             // 
-            this.comboBox1.Font = new System.Drawing.Font("Segoe UI Emoji", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBox1.Font = new System.Drawing.Font("Cascadia Mono", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            " +375 бу",
-            "+998 узб",
-            "+996 крг",
-            "+91 индия",
-            "+92 пакистан"});
             this.comboBox1.Location = new System.Drawing.Point(235, 207);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(71, 23);
+            this.comboBox1.Size = new System.Drawing.Size(136, 23);
             this.comboBox1.TabIndex = 18;
             this.comboBox1.Text = "+7";
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);

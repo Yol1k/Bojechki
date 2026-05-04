@@ -1,14 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
+using Bojechki.Services;
 
 namespace Bojechki
 {
@@ -42,7 +34,7 @@ namespace Bojechki
                 return;
             }
             string request = $"LOGIN|{email}|{password}";
-            string response = SendRequestToServer(request);
+            string response = ServerConnection.SendRequestToServer(request);
 
             if (response == "SUCCESS")
             {
@@ -68,26 +60,6 @@ namespace Bojechki
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
             password = textBox2.Text;
-        }
-
-        public string SendRequestToServer(string message)
-        {
-            try
-            {
-                using (TcpClient client = new TcpClient("127.0.0.1", 13000))
-                using (NetworkStream stream = client.GetStream())
-                {
-                    byte[] requestData = Encoding.UTF8.GetBytes(message);
-                    stream.Write(requestData, 0, requestData.Length);
-                    byte[] buffer = new byte[1024];
-                    int bytesRead = stream.Read(buffer, 0, buffer.Length);
-                    return Encoding.UTF8.GetString(buffer, 0, bytesRead);
-                }
-            }
-            catch (Exception ex)
-            {
-                return $"Ошибка сети: {ex.Message}";
-            }
         }
     }
 }

@@ -15,9 +15,9 @@ namespace Bojechki_server
             TcpListener server = null;
             try
             {
-                server = new TcpListener(IPAddress.Parse("127.0.0.1"), 13000);
+                server = new TcpListener(IPAddress.Parse("127.0.0.1"), 5001);
                 server.Start();
-                Console.WriteLine("Сервер запущен на 127.0.0.1:13000");
+                Console.WriteLine("Сервер запущен на 127.0.0.1:5001");
 
                 while (true)
                 {

@@ -22,7 +22,7 @@ namespace Bojechki_server.Handlers
             {
                 Email = email,
                 Password = PasswordHelper.HashPassword(password),
-                FullName = fullName,
+                Full_Name = fullName,
                 Address = address,
                 Phone = phone,
             };
