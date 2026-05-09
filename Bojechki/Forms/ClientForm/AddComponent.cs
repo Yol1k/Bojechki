@@ -24,22 +24,22 @@ namespace Bojechki.Forms.ClientForm
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            name = textBox1.Text;
+            name = tb_name.Text;
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            type = comboBox1.Text;
+            type = cb_type.Text;
         }
 
         private void textBox3_TextChanged(object sender, EventArgs e)
         {
-            retail_price = textBox3.Text;
+            retail_price = tb_retail_price.Text;
         }
 
         private void textBox4_TextChanged(object sender, EventArgs e)
         {
-            stock_quantity = textBox4.Text;
+            stock_quantity = tb_stock_quantity.Text;
         }
 
         private void btn_add_component_Click(object sender, EventArgs e)
@@ -59,7 +59,7 @@ namespace Bojechki.Forms.ClientForm
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            purchase_price = textBox2.Text;
+            purchase_price = tb_purchase_price.Text;
         }
     }
 }

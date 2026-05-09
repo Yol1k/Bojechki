@@ -43,13 +43,13 @@ namespace Bojechki
 
         private void btnLoadClients_Click(object sender, EventArgs e)
         {
-            string jsonResponse = ServerConnection.SendRequestToServer("GET_CLIENTS");
+            string jsonResponse = ServerConnection.SendRequestToServer("GET_CATALOGS");
 
             if (jsonResponse != "UNKNOWN_COMMAND" && !jsonResponse.StartsWith("Ошибка"))
             {
-                var clientsList = JsonConvert.DeserializeObject<List<Client>>(jsonResponse);
+                var catalogs = JsonConvert.DeserializeObject<List<Catalog>>(jsonResponse);
 
-                dataGridView1.DataSource = clientsList;
+                dataGridView1.DataSource = catalogs;
             }
             else
             {
@@ -116,7 +116,7 @@ namespace Bojechki
         private void btnAddComponent_Click(object sender, EventArgs e)
         {
             AddComponent addComponent = new AddComponent();
-            addComponent.ComponentAdded += () => RefreshComponentsGrid();
+            addComponent.ComponentAdded += () => RefreshComponents();
             addComponent.Show();
         }
 
@@ -127,7 +127,7 @@ namespace Bojechki
             if (MessageBox.Show("Удалить?", "Подтверждение", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 string response = ServerConnection.SendRequestToServer($"DELETE_COMPONENT|{id}");
-                if (response == "SUCCESS") RefreshComponentsGrid();
+                if (response == "SUCCESS") RefreshComponents();
                 else MessageBox.Show(response);
             }
         }
@@ -147,16 +147,62 @@ namespace Bojechki
             {
                 if (editForm.ShowDialog() == DialogResult.OK)
                 {
-                    RefreshComponentsGrid();
+                    RefreshComponents();
                 }
             }
         }
 
-        private void RefreshComponentsGrid()
+        private void btnAddCatalog_Click(object sender, EventArgs e)
+        {
+            AddCatalog addCatalog = new AddCatalog();
+            addCatalog.CatalogAdded +=() => RefreshCatalogs();
+            addCatalog.Show();
+        }
+
+        private void btnDeleteCatalog_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count == 0) return;
+            int id = (int)dataGridView1.SelectedRows[0].Cells["Id"].Value;
+            if (MessageBox.Show("Удалить?", "Подтверждение", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                string response = ServerConnection.SendRequestToServer($"DELETE_CATALOG|{id}");
+                if (response == "SUCCESS") RefreshCatalogs();
+                else MessageBox.Show(response);
+            }
+        }
+
+        private void btnUpdateCatalog_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Выбери товар для редактирования");
+                return;
+            }
+
+            Catalog catalog = (Catalog)dataGridView1.SelectedRows[0].DataBoundItem;
+            if (catalog == null) return;
+
+            using (var editForm = new EditCatalog(catalog))
+            {
+                if (editForm.ShowDialog() == DialogResult.OK)
+                {
+                    RefreshCatalogs();
+                }
+            }
+        }
+
+        private void RefreshComponents()
         {
             string json = ServerConnection.SendRequestToServer("GET_COMPONENTS");
             var components = JsonConvert.DeserializeObject<List<Component>>(json);
             dataGridView1.DataSource = components;
+        }
+
+        private void RefreshCatalogs()
+        {
+            string json = ServerConnection.SendRequestToServer("GET_CATALOGS");
+            var catalogs = JsonConvert.DeserializeObject<List<Catalog>>(json);
+            dataGridView1.DataSource = catalogs;
         }
     }
 }

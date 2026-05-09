@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.tb_email = new System.Windows.Forms.TextBox();
+            this.tb_password = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -37,22 +37,22 @@
             this.login_btn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // textBox1
+            // tb_email
             // 
-            this.textBox1.Location = new System.Drawing.Point(204, 110);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(278, 20);
-            this.textBox1.TabIndex = 0;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.tb_email.Location = new System.Drawing.Point(204, 110);
+            this.tb_email.Name = "tb_email";
+            this.tb_email.Size = new System.Drawing.Size(278, 20);
+            this.tb_email.TabIndex = 0;
+            this.tb_email.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
-            // textBox2
+            // tb_password
             // 
-            this.textBox2.Location = new System.Drawing.Point(204, 172);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(278, 20);
-            this.textBox2.TabIndex = 1;
-            this.textBox2.UseSystemPasswordChar = true;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            this.tb_password.Location = new System.Drawing.Point(204, 172);
+            this.tb_password.Name = "tb_password";
+            this.tb_password.Size = new System.Drawing.Size(278, 20);
+            this.tb_password.TabIndex = 1;
+            this.tb_password.UseSystemPasswordChar = true;
+            this.tb_password.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // label1
             // 
@@ -111,8 +111,8 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.tb_password);
+            this.Controls.Add(this.tb_email);
             this.Name = "Authorization";
             this.Text = "Authorization";
             this.Load += new System.EventHandler(this.Authorization_Load);
@@ -123,8 +123,8 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox tb_email;
+        private System.Windows.Forms.TextBox tb_password;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;

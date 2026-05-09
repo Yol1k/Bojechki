@@ -20,25 +20,25 @@ namespace Bojechki
         Form1 form1 = new Form1();
         private void Registration_Load(object sender, EventArgs e)
         {
-            comboBox1.Items.Add("+7 Россия");
-            comboBox1.Items.Add("+375 Беларусь");
-            comboBox1.Items.Add("+998 Узбекистан");
-            comboBox1.Items.Add("+91 Индия");
-            comboBox1.Items.Add("+92 Пакистан");
-            comboBox1.Items.Add("+992 Таджикистан");
-            comboBox1.Items.Add("+850 КНДР");
-            comboBox1.Items.Add("+1 США");
-            comboBox1.SelectedIndex = 0;
+            cb_prefix.Items.Add("+7 Россия");
+            cb_prefix.Items.Add("+375 Беларусь");
+            cb_prefix.Items.Add("+998 Узбекистан");
+            cb_prefix.Items.Add("+91 Индия");
+            cb_prefix.Items.Add("+92 Пакистан");
+            cb_prefix.Items.Add("+992 Таджикистан");
+            cb_prefix.Items.Add("+850 КНДР");
+            cb_prefix.Items.Add("+1 США");
+            cb_prefix.SelectedIndex = 0;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            email = textBox1.Text;
+            email = tb_email.Text;
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            password = textBox2.Text;
+            password = tb_password.Text;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -89,7 +89,7 @@ namespace Bojechki
 
         private void textBox3_TextChanged(object sender, EventArgs e)
         {
-            full_name = textBox3.Text;
+            full_name = tb_fio.Text;
         }
 
         private void label4_Click(object sender, EventArgs e)
@@ -99,14 +99,14 @@ namespace Bojechki
 
         private void textBox4_TextChanged(object sender, EventArgs e)
         {
-            address = textBox4.Text;
+            address = tb_adress.Text;
         }
 
         private void textBox5_TextChanged(object sender, EventArgs e)
         {
-            string selected = comboBox1.SelectedItem.ToString();
+            string selected = cb_prefix.SelectedItem.ToString();
             string code = selected.Split(' ')[0];
-            phone = code + textBox5.Text;
+            phone = code + tb_phone.Text;
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)

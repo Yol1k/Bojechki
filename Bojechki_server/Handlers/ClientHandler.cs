@@ -28,15 +28,19 @@ namespace Bojechki_server.Handlers
 
                         switch (command)
                         {
-                            case "GET_COMPONENTS": response = DbTablesHandler.HandleGetComponents(db); break;
-                            case "GET_CLIENTS": response = DbTablesHandler.HandleGetClients(db); break;
-                            case "GET_ORDERS": response = DbTablesHandler.HandleGetOrders(db); break;
+                            //авторизация
                             case "LOGIN": response = LoginHandler.HandleLogin(db, parts); break;
                             case "REGISTER": response = RegisterHandler.HandleRegister(db, parts); break;
+                            //компоненты (orm)
+                            case "GET_COMPONENTS": response = DbTablesHandler.HandleGetComponents(db); break;
                             case "ADD_COMPONENT": response = DbTablesHandler.HandleAddComponent(db, parts); break;
                             case "UPDATE_COMPONENT": response = DbTablesHandler.HandleUpdateComponent(db, parts); break;
                             case "DELETE_COMPONENT": response = DbTablesHandler.HandleDeleteComponent(db, parts); break;
-                            case "SEARCH_COMPONENTS": response = DbTablesHandler.HandleSearchComponents(db, parts); break;
+                            //каталоги (сырой sql)
+                            case "GET_CATALOGS": response = DbTablesHandler.HandleGetCatalogs(db.connectionString); break;
+                            case "ADD_CATALOG": response = DbTablesHandler.HandleAddCatalog(db.connectionString, parts); break;
+                            case "UPDATE_CATALOG": response = DbTablesHandler.HandleUpdateCatalog(db.connectionString, parts); break;
+                            case "DELETE_CATALOG": response = DbTablesHandler.HandleDeleteCatalog(db.connectionString, parts); break;
                             default: response = "UNKNOWN_COMMAND"; break;
                         }
                     }

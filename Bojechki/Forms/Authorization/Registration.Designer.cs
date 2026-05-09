@@ -28,36 +28,36 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.tb_email = new System.Windows.Forms.TextBox();
+            this.tb_password = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.register_btn = new System.Windows.Forms.Button();
+            this.tb_fio = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.tb_adress = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.tb_phone = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cb_prefix = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
-            // textBox1
+            // tb_email
             // 
-            this.textBox1.Location = new System.Drawing.Point(235, 274);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(278, 20);
-            this.textBox1.TabIndex = 6;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.tb_email.Location = new System.Drawing.Point(235, 274);
+            this.tb_email.Name = "tb_email";
+            this.tb_email.Size = new System.Drawing.Size(278, 20);
+            this.tb_email.TabIndex = 6;
+            this.tb_email.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
-            // textBox2
+            // tb_password
             // 
-            this.textBox2.Location = new System.Drawing.Point(235, 336);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(278, 20);
-            this.textBox2.TabIndex = 7;
-            this.textBox2.UseSystemPasswordChar = true;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            this.tb_password.Location = new System.Drawing.Point(235, 336);
+            this.tb_password.Name = "tb_password";
+            this.tb_password.Size = new System.Drawing.Size(278, 20);
+            this.tb_password.TabIndex = 7;
+            this.tb_password.UseSystemPasswordChar = true;
+            this.tb_password.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // label1
             // 
@@ -77,23 +77,23 @@
             this.label2.TabIndex = 9;
             this.label2.Text = "Пароль";
             // 
-            // button1
+            // register_btn
             // 
-            this.button1.Location = new System.Drawing.Point(235, 374);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(275, 23);
-            this.button1.TabIndex = 11;
-            this.button1.Text = "Зарегистрироваться";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.register_btn.Location = new System.Drawing.Point(235, 374);
+            this.register_btn.Name = "register_btn";
+            this.register_btn.Size = new System.Drawing.Size(275, 23);
+            this.register_btn.TabIndex = 11;
+            this.register_btn.Text = "Зарегистрироваться";
+            this.register_btn.UseVisualStyleBackColor = true;
+            this.register_btn.Click += new System.EventHandler(this.button1_Click);
             // 
-            // textBox3
+            // tb_fio
             // 
-            this.textBox3.Location = new System.Drawing.Point(235, 87);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(278, 20);
-            this.textBox3.TabIndex = 12;
-            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
+            this.tb_fio.Location = new System.Drawing.Point(235, 87);
+            this.tb_fio.Name = "tb_fio";
+            this.tb_fio.Size = new System.Drawing.Size(278, 20);
+            this.tb_fio.TabIndex = 12;
+            this.tb_fio.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // label3
             // 
@@ -105,13 +105,13 @@
             this.label3.Text = "ФИО";
             this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
-            // textBox4
+            // tb_adress
             // 
-            this.textBox4.Location = new System.Drawing.Point(235, 145);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(278, 20);
-            this.textBox4.TabIndex = 14;
-            this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
+            this.tb_adress.Location = new System.Drawing.Point(235, 145);
+            this.tb_adress.Name = "tb_adress";
+            this.tb_adress.Size = new System.Drawing.Size(278, 20);
+            this.tb_adress.TabIndex = 14;
+            this.tb_adress.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
             // 
             // label4
             // 
@@ -123,13 +123,13 @@
             this.label4.Text = "Адрес проживания";
             this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
-            // textBox5
+            // tb_phone
             // 
-            this.textBox5.Location = new System.Drawing.Point(377, 208);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(136, 20);
-            this.textBox5.TabIndex = 16;
-            this.textBox5.TextChanged += new System.EventHandler(this.textBox5_TextChanged);
+            this.tb_phone.Location = new System.Drawing.Point(377, 208);
+            this.tb_phone.Name = "tb_phone";
+            this.tb_phone.Size = new System.Drawing.Size(136, 20);
+            this.tb_phone.TabIndex = 16;
+            this.tb_phone.TextChanged += new System.EventHandler(this.textBox5_TextChanged);
             // 
             // label5
             // 
@@ -140,34 +140,34 @@
             this.label5.TabIndex = 17;
             this.label5.Text = "Номер телефона";
             // 
-            // comboBox1
+            // cb_prefix
             // 
-            this.comboBox1.Font = new System.Drawing.Font("Cascadia Mono", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(235, 207);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(136, 23);
-            this.comboBox1.TabIndex = 18;
-            this.comboBox1.Text = "+7";
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.cb_prefix.Font = new System.Drawing.Font("Cascadia Mono", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cb_prefix.FormattingEnabled = true;
+            this.cb_prefix.Location = new System.Drawing.Point(235, 207);
+            this.cb_prefix.Name = "cb_prefix";
+            this.cb_prefix.Size = new System.Drawing.Size(136, 23);
+            this.cb_prefix.TabIndex = 18;
+            this.cb_prefix.Text = "+7";
+            this.cb_prefix.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // Registration
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.cb_prefix);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.textBox5);
+            this.Controls.Add(this.tb_phone);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.textBox4);
+            this.Controls.Add(this.tb_adress);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.tb_fio);
+            this.Controls.Add(this.register_btn);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.tb_password);
+            this.Controls.Add(this.tb_email);
             this.Name = "Registration";
             this.Text = "Registration";
             this.Load += new System.EventHandler(this.Registration_Load);
@@ -178,17 +178,17 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox tb_email;
+        private System.Windows.Forms.TextBox tb_password;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Button register_btn;
+        private System.Windows.Forms.TextBox tb_fio;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox tb_adress;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox tb_phone;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cb_prefix;
     }
 }

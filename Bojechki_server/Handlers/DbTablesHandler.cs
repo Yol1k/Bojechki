@@ -1,27 +1,18 @@
 ﻿using Bojechki_server.Database;
 using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 
 namespace Bojechki_server.Handlers
 {
     public static class DbTablesHandler
     {
+        //КОМПОНЕНТЫЧИ
         public static string HandleGetComponents(AppDbContext db)
         {
             var components = db.Components.ToList();
             return Newtonsoft.Json.JsonConvert.SerializeObject(components);
-        }
-
-        public static string HandleGetClients(AppDbContext db)
-        {
-            var clients = db.Clients.ToList();
-            return Newtonsoft.Json.JsonConvert.SerializeObject(clients);
-        }
-
-        public static string HandleGetOrders(AppDbContext db)
-        {
-            var orders = db.Orders.ToList();
-            return Newtonsoft.Json.JsonConvert.SerializeObject(orders);
         }
 
         public static string HandleAddComponent(AppDbContext db, string[] parts)
@@ -103,9 +94,134 @@ namespace Bojechki_server.Handlers
             }
         }
 
-        public static string HandleSearchComponents(AppDbContext db, string[] parts)
+        //КАТАЛОГИЧИ
+        public static string HandleGetCatalogs(string connectionString)
         {
-            return "";
+            try
+            {
+                var catalogs = new List<Catalog>();
+                string query = "SELECT id, name AS 'Название', type AS 'Тип', description AS 'Описание', price AS 'Цена' FROM Catalogs";
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    SqlCommand command = new SqlCommand(query, connection);
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        catalogs.Add(new Catalog
+                        {
+                            Id = reader.GetInt32(0),
+                            Name = reader.GetString(1),
+                            Type = reader.GetString(2),
+                            Description = reader.GetString(3),
+                            Price = reader.GetDecimal(4)
+                        });
+                    }
+                }
+
+                return Newtonsoft.Json.JsonConvert.SerializeObject(catalogs);
+            }
+            catch (Exception ex)
+            {
+                return $"FAIL|{ex.Message}";
+            }
         }
+        public static string HandleAddCatalog(string connectionString, string[] parts)
+        {
+            if (parts.Length != 5) return $"FAIL| Ожидается Название|Тип|Описание|Цена";
+
+            try
+            {
+                string name = parts[1];
+                string type = parts[2];
+                string description = parts[3];
+                decimal price = decimal.Parse(parts[4]);
+
+                string query = @"INSERT INTO Catalogs (name, type, description, price) VALUES (@name, @type, @description, @price)";
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@name", name);
+                        command.Parameters.AddWithValue("@type", type);
+                        command.Parameters.AddWithValue("@description", description);
+                        command.Parameters.AddWithValue("@price", price);
+                        command.ExecuteNonQuery();
+                    }
+                }
+
+                return "SUCCESS";
+            }
+            catch (Exception ex)
+            {
+                return $"FAIL|{ex.Message}";
+            }
+        }
+
+        public static string HandleUpdateCatalog(string connectionString, string[] parts)
+        {
+            if (parts.Length < 6) return $"FAIL| Ожидается Название|Тип|Описание|Цена";
+            if (!int.TryParse(parts[1], out int id)) return "FAIL|Неверный id";
+
+            try
+            {
+                string name = parts[2];
+                string type = parts[3];
+                string description = parts[4];
+                decimal price = decimal.Parse(parts[5]);
+
+                string query = @"UPDATE Catalogs SET name=@name, type=@type, description=@description, price=@price WHERE id=@id";
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@id", id);
+                        command.Parameters.AddWithValue("@name", name);
+                        command.Parameters.AddWithValue("@type", type);
+                        command.Parameters.AddWithValue("@description", description);
+                        command.Parameters.AddWithValue("@price", price);
+                        command.ExecuteNonQuery();
+
+                        int rows = command.ExecuteNonQuery();
+                        return rows > 0 ? "SUCCESS" : "FAIL|Каталог не найден";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return $"FAIL|{ex.Message}";
+            }
+        }
+
+        public static string HandleDeleteCatalog(string connectionString, string[] parts)
+        {
+            if (parts.Length < 2) return "FAIL|Не указан id";
+            if (!int.TryParse(parts[1], out int id)) return "FAIL|Неверный id";
+
+            try
+            {
+                string query = "DELETE FROM Catalogs WHERE id = @id";
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@id", id);
+                        int rows = cmd.ExecuteNonQuery();
+                        return rows > 0 ? "SUCCESS" : "FAIL|Каталог не найден";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return $"FAIL|{ex.Message}";
+            }
+        }
+
     }
 }

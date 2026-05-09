@@ -12,7 +12,7 @@ namespace Bojechki
         }
         public string email = "";
         public string password = "";
-        Form1 form1 = new Form1();
+        private Form1 form1 = new Form1();
 
         private void register_btn_Click(object sender, EventArgs e)
         {
@@ -54,12 +54,12 @@ namespace Bojechki
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            email = textBox1.Text;
+            email = tb_email.Text;
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            password = textBox2.Text;
+            password = tb_password.Text;
         }
     }
 }
