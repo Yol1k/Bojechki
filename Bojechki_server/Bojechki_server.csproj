@@ -161,6 +161,7 @@
     <Compile Include="Commands\Catalogs.cs" />
     <Compile Include="Commands\Components.cs" />
     <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\LoggerDecoratorCommand.cs" />
     <Compile Include="Commands\Search.cs" />
     <Compile Include="Database\Catalog.cs" />
     <Compile Include="Database\Client.cs" />

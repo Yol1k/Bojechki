@@ -11,18 +11,18 @@ namespace Bojechki_server.Handlers
     {
         private static readonly Dictionary<string, ICommand> _commands = new Dictionary<string, ICommand>()
         {
-            ["LOGIN"] = new LoginCommand(),
-            ["REGISTER"] = new RegisterCommand(),
-            ["GET_COMPONENTS"] = new GetComponentsCommand(),
-            ["ADD_COMPONENT"] = new AddComponentCommand(),
-            ["UPDATE_COMPONENT"] = new UpdateComponentCommand(),
-            ["DELETE_COMPONENT"] = new DeleteComponentCommand(),
-            ["GET_CATALOGS"] = new GetCatalogsCommand(),
-            ["ADD_CATALOG"] = new AddCatalogCommand(),
-            ["UPDATE_CATALOG"] = new UpdateCatalogCommand(),
-            ["DELETE_CATALOG"] = new DeleteCatalogCommand(),
-            ["SEARCH_CATALOGS"] = new SearchCatalogsCommand(),
-            ["SEARCH_COMPONENTS"] = new SearchComponentsCommand(),
+            ["LOGIN"] = new LoggerDecoratorCommand( new LoginCommand() ),
+            ["REGISTER"] = new LoggerDecoratorCommand ( new RegisterCommand() ),
+            ["GET_COMPONENTS"] = new LoggerDecoratorCommand ( new GetComponentsCommand() ),
+            ["ADD_COMPONENT"] = new LoggerDecoratorCommand ( new AddComponentCommand() ),
+            ["UPDATE_COMPONENT"] = new LoggerDecoratorCommand(new UpdateComponentCommand()),
+            ["DELETE_COMPONENT"] = new LoggerDecoratorCommand(new DeleteComponentCommand()),
+            ["GET_CATALOGS"] = new LoggerDecoratorCommand(new GetCatalogsCommand()),
+            ["ADD_CATALOG"] = new LoggerDecoratorCommand(new AddCatalogCommand()),
+            ["UPDATE_CATALOG"] = new LoggerDecoratorCommand(new UpdateCatalogCommand()),
+            ["DELETE_CATALOG"] = new LoggerDecoratorCommand(new DeleteCatalogCommand()),
+            ["SEARCH_CATALOGS"] = new LoggerDecoratorCommand(new SearchCatalogsCommand()),
+            ["SEARCH_COMPONENTS"] = new LoggerDecoratorCommand(new SearchComponentsCommand()),
         };
 
         public static void ProcessClient(TcpClient client)
@@ -36,7 +36,6 @@ namespace Bojechki_server.Handlers
                     if (i == 0) return;
 
                     string data = Encoding.UTF8.GetString(bytes, 0, i);
-                    Console.WriteLine($"Получено: {data}");
 
                     string response = "";
                     using (var db = new AppDbContext())
@@ -56,7 +55,6 @@ namespace Bojechki_server.Handlers
 
                     byte[] msg = Encoding.UTF8.GetBytes(response);
                     stream.Write(msg, 0, msg.Length);
-                    Console.WriteLine($"Отправлено {msg.Length} байт");
                 }
             }
             catch (Exception ex)
