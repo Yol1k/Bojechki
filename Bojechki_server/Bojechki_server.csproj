@@ -157,6 +157,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\Authorization.cs" />
+    <Compile Include="Commands\Catalogs.cs" />
+    <Compile Include="Commands\Components.cs" />
+    <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\Search.cs" />
     <Compile Include="Database\Catalog.cs" />
     <Compile Include="Database\Client.cs" />
     <Compile Include="Database\Component.cs" />

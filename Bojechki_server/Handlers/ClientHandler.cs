@@ -1,12 +1,30 @@
-﻿using System;
+﻿using Bojechki_server.Commands;
+using Bojechki_server.Database;
+using System;
+using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
-using Bojechki_server.Database;
 
 namespace Bojechki_server.Handlers
 {
     public static class ClientHandler
     {
+        private static readonly Dictionary<string, ICommand> _commands = new Dictionary<string, ICommand>()
+        {
+            ["LOGIN"] = new LoginCommand(),
+            ["REGISTER"] = new RegisterCommand(),
+            ["GET_COMPONENTS"] = new GetComponentsCommand(),
+            ["ADD_COMPONENT"] = new AddComponentCommand(),
+            ["UPDATE_COMPONENT"] = new UpdateComponentCommand(),
+            ["DELETE_COMPONENT"] = new DeleteComponentCommand(),
+            ["GET_CATALOGS"] = new GetCatalogsCommand(),
+            ["ADD_CATALOG"] = new AddCatalogCommand(),
+            ["UPDATE_CATALOG"] = new UpdateCatalogCommand(),
+            ["DELETE_CATALOG"] = new DeleteCatalogCommand(),
+            ["SEARCH_CATALOGS"] = new SearchCatalogsCommand(),
+            ["SEARCH_COMPONENTS"] = new SearchComponentsCommand(),
+        };
+
         public static void ProcessClient(TcpClient client)
         {
             try
@@ -24,27 +42,15 @@ namespace Bojechki_server.Handlers
                     using (var db = new AppDbContext())
                     {
                         string[] parts = data.Split('|');
-                        string command = parts[0];
+                        string part = parts[0];
 
-                        switch (command)
+                        if (_commands.TryGetValue(part, out ICommand command))
                         {
-                            //авторизация
-                            case "LOGIN": response = LoginHandler.HandleLogin(db, parts); break;
-                            case "REGISTER": response = RegisterHandler.HandleRegister(db, parts); break;
-                            //компоненты (orm)
-                            case "GET_COMPONENTS": response = DbTablesHandler.HandleGetComponents(db); break;
-                            case "ADD_COMPONENT": response = DbTablesHandler.HandleAddComponent(db, parts); break;
-                            case "UPDATE_COMPONENT": response = DbTablesHandler.HandleUpdateComponent(db, parts); break;
-                            case "DELETE_COMPONENT": response = DbTablesHandler.HandleDeleteComponent(db, parts); break;
-                            //каталоги (сырой sql)
-                            case "GET_CATALOGS": response = DbTablesHandler.HandleGetCatalogs(db.connectionString); break;
-                            case "ADD_CATALOG": response = DbTablesHandler.HandleAddCatalog(db.connectionString, parts); break;
-                            case "UPDATE_CATALOG": response = DbTablesHandler.HandleUpdateCatalog(db.connectionString, parts); break;
-                            case "DELETE_CATALOG": response = DbTablesHandler.HandleDeleteCatalog(db.connectionString, parts); break;
-                            //поиск
-                            case "SEARCH_CATALOGS": response = DbTablesHandler.HandleSearchCatalogs(db, parts); break;
-                            case "SEARCH_COMPONENTS": response = DbTablesHandler.HandleSearchComponents(db.connectionString, parts); break;
-                            default: response = "UNKNOWN_COMMAND"; break;
+                            response = command.Execute(db, parts);
+                        }
+                        else
+                        {
+                            response = "UNKNOWN_COMMAND";
                         }
                     }
 
