@@ -41,6 +41,9 @@ namespace Bojechki_server.Handlers
                             case "ADD_CATALOG": response = DbTablesHandler.HandleAddCatalog(db.connectionString, parts); break;
                             case "UPDATE_CATALOG": response = DbTablesHandler.HandleUpdateCatalog(db.connectionString, parts); break;
                             case "DELETE_CATALOG": response = DbTablesHandler.HandleDeleteCatalog(db.connectionString, parts); break;
+                            //поиск
+                            case "SEARCH_CATALOGS": response = DbTablesHandler.HandleSearchCatalogs(db, parts); break;
+                            case "SEARCH_COMPONENTS": response = DbTablesHandler.HandleSearchComponents(db.connectionString, parts); break;
                             default: response = "UNKNOWN_COMMAND"; break;
                         }
                     }

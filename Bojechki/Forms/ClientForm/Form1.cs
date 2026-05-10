@@ -1,24 +1,25 @@
-﻿using Newtonsoft.Json;
+﻿using Bojechki.Forms.ClientForm;
+using Bojechki.Models;
+using Bojechki.Services;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
 using System.Windows.Forms;
-using Bojechki.Services;
-using Bojechki.Models;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using Component = Bojechki.Models.Component;
-using Bojechki.Forms.ClientForm;
 
 namespace Bojechki
 {
     public partial class Form1 : Form
     {
-        private string connectionString = $@"Data Source=(localdb)\v13.0;Initial Catalog=bog;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
         private Process serverProcess;
 
         public Form1()
@@ -28,6 +29,7 @@ namespace Bojechki
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            cb_tables.SelectedIndex = 0;
             try
             {
                 //string serverExePath = "Bojechki_server.exe";
@@ -41,82 +43,38 @@ namespace Bojechki
             }
         }
 
-        private void btnLoadClients_Click(object sender, EventArgs e)
+        private void btnLoadCatalogs_Click(object sender, EventArgs e)
         {
-            string jsonResponse = ServerConnection.SendRequestToServer("GET_CATALOGS");
-
-            if (jsonResponse != "UNKNOWN_COMMAND" && !jsonResponse.StartsWith("Ошибка"))
-            {
-                var catalogs = JsonConvert.DeserializeObject<List<Catalog>>(jsonResponse);
-
-                dataGridView1.DataSource = catalogs;
-            }
-            else
-            {
-                MessageBox.Show(jsonResponse);
-            }
+            LoadCatalogs();
         }
 
         private void btnLoadComponents_Click(object sender, EventArgs e)
         {
-            string jsonResponse = ServerConnection.SendRequestToServer("GET_COMPONENTS");
-
-            if (jsonResponse != "UNKNOWN_COMMAND" && !jsonResponse.StartsWith("Ошибка"))
-            {
-                var componentsList = JsonConvert.DeserializeObject<List<Component>>(jsonResponse);
-
-                dataGridView1.DataSource = componentsList;
-            }
-            else
-            {
-                MessageBox.Show(jsonResponse);
-            }
+            LoadComponents();
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
-        {            
-            string searchText = txtSearch.Text.Trim();
-            string query = "";
-
-            try
+        {
+            if (cb_tables.Text.ToLower() == "каталоги")
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    if (string.IsNullOrEmpty(searchText))
-                    {
-                        query = "SELECT * FROM Components";
-                    }
-                    query = "SELECT name AS 'Название', type AS 'Тип', retail_price AS 'Цена (руб)' FROM Components WHERE name LIKE @search";
-
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@search", "%" + searchText + "%");
-
-                        using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                        {
-                            DataTable table = new DataTable();
-                            adapter.Fill(table);
-                            dataGridView1.DataSource = table;
-
-                            if (table.Rows.Count == 0)
-                            {
-                                MessageBox.Show("Ничего не найдено.");
-                            }
-                        }
-                    }
-                }
+                string request = $"SEARCH_CATALOGS|{txtSearch.Text}|{comboBox1.Text}|{checkedListBox1.SelectedIndex.ToString()}";
+                string json = ServerConnection.SendRequestToServer(request);
+                var catalogs = JsonConvert.DeserializeObject<List<Catalog>>(json);
+                dataGridView1.DataSource = catalogs;
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show("Ошибка поиска: " + ex.Message);
+                string request = $"SEARCH_COMPONENTS|{txtSearch.Text}|{comboBox1.Text}|{checkedListBox1.SelectedIndex.ToString()}";
+                string json = ServerConnection.SendRequestToServer(request);
+                var components = JsonConvert.DeserializeObject<List<Component>>(json);
+                dataGridView1.DataSource = components;
             }
         }
 
         private void btnAddComponent_Click(object sender, EventArgs e)
         {
             AddComponent addComponent = new AddComponent();
-            addComponent.ComponentAdded += () => RefreshComponents();
+            addComponent.ComponentAdded += () => LoadComponents();
             addComponent.Show();
         }
 
@@ -127,7 +85,7 @@ namespace Bojechki
             if (MessageBox.Show("Удалить?", "Подтверждение", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 string response = ServerConnection.SendRequestToServer($"DELETE_COMPONENT|{id}");
-                if (response == "SUCCESS") RefreshComponents();
+                if (response == "SUCCESS") LoadComponents();
                 else MessageBox.Show(response);
             }
         }
@@ -147,7 +105,7 @@ namespace Bojechki
             {
                 if (editForm.ShowDialog() == DialogResult.OK)
                 {
-                    RefreshComponents();
+                    LoadComponents();
                 }
             }
         }
@@ -155,7 +113,7 @@ namespace Bojechki
         private void btnAddCatalog_Click(object sender, EventArgs e)
         {
             AddCatalog addCatalog = new AddCatalog();
-            addCatalog.CatalogAdded +=() => RefreshCatalogs();
+            addCatalog.CatalogAdded +=() => LoadCatalogs();
             addCatalog.Show();
         }
 
@@ -166,7 +124,7 @@ namespace Bojechki
             if (MessageBox.Show("Удалить?", "Подтверждение", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 string response = ServerConnection.SendRequestToServer($"DELETE_CATALOG|{id}");
-                if (response == "SUCCESS") RefreshCatalogs();
+                if (response == "SUCCESS") LoadCatalogs();
                 else MessageBox.Show(response);
             }
         }
@@ -186,23 +144,76 @@ namespace Bojechki
             {
                 if (editForm.ShowDialog() == DialogResult.OK)
                 {
-                    RefreshCatalogs();
+                    LoadCatalogs();
                 }
             }
         }
 
-        private void RefreshComponents()
+        private void LoadComponents()
         {
             string json = ServerConnection.SendRequestToServer("GET_COMPONENTS");
             var components = JsonConvert.DeserializeObject<List<Component>>(json);
             dataGridView1.DataSource = components;
+            cb_tables.SelectedIndex = 0;
+            UpdateColumns();
         }
 
-        private void RefreshCatalogs()
+        private void LoadCatalogs()
         {
             string json = ServerConnection.SendRequestToServer("GET_CATALOGS");
             var catalogs = JsonConvert.DeserializeObject<List<Catalog>>(json);
             dataGridView1.DataSource = catalogs;
+            cb_tables.SelectedIndex = 1;
+            UpdateColumns();
+        }
+
+        private void UpdateColumns()
+        {
+            comboBox1.Items.Clear();
+            if (dataGridView1.DataSource != null)
+            {
+                foreach (DataGridViewColumn column in dataGridView1.Columns)
+                {
+                    comboBox1.Items.Add(column.HeaderText);
+                }
+                comboBox1.SelectedIndex = 0;
+            }
+        }
+
+        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (checkedListBox1.CheckedItems.Count > 1)
+            {
+                for (int i = 0; i < checkedListBox1.Items.Count; i++)
+                    checkedListBox1.SetItemChecked(i, false);
+                checkedListBox1.SetItemChecked(checkedListBox1.SelectedIndex, true);
+            }
+        }
+
+        private void cb_tables_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            comboBox1.Items.Clear();
+            comboBox1.Text = null;
+
+            if (cb_tables.SelectedIndex == 0)
+            {
+                comboBox1.Items.Add("Id");
+                comboBox1.Items.Add("Name");
+                comboBox1.Items.Add("Type");
+                comboBox1.Items.Add("Purchase_Price");
+                comboBox1.Items.Add("Retail_Price");
+                comboBox1.Items.Add("Stock_Quantity");
+                comboBox1.Text = "Id";
+            }
+            else
+            {
+                comboBox1.Text = "Id";
+                comboBox1.Items.Add("Id");
+                comboBox1.Items.Add("Name");
+                comboBox1.Items.Add("Type");
+                comboBox1.Items.Add("Description");
+                comboBox1.Items.Add("Price");
+            }
         }
     }
 }

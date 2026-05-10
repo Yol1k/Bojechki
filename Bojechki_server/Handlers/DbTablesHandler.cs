@@ -1,8 +1,13 @@
 ﻿using Bojechki_server.Database;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Xml.Linq;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Bojechki_server.Handlers
 {
@@ -221,6 +226,97 @@ namespace Bojechki_server.Handlers
             {
                 return $"FAIL|{ex.Message}";
             }
+        }
+
+        public static string HandleSearchCatalogs(AppDbContext db, string[] parts)
+        {
+            string txtSearch = parts.Length > 1 ? parts[1] : null;
+            string filter = parts.Length > 2 ? parts[2] : null;
+            string check = parts.Length > 3 ? parts[3] : "по убыванию";
+            var query = db.Catalogs.AsQueryable();
+            if (!string.IsNullOrEmpty(txtSearch))
+            {
+                query = query.Where(
+                    c => c.Id.ToString().Contains(txtSearch) 
+                || c.Name.Contains(txtSearch) 
+                || c.Type.Contains(txtSearch) 
+                || c.Price.ToString().Contains(txtSearch));
+            }
+            if (!string.IsNullOrEmpty(filter))
+            {
+                switch (filter.ToLower())
+                {
+                    case "name": query = query.OrderByDescending(c => c.Name); break;
+                    case "type": query = query.OrderByDescending(c => c.Type); break;
+                    case "description": query = query.OrderByDescending(c => c.Description); break;
+                    case "price": query = query.OrderByDescending(c => c.Price); break;
+                }
+            }
+            else
+            {
+                query.OrderByDescending(c => c.Id);
+            }
+
+            var result = query.ToList();
+            return JsonConvert.SerializeObject(result);
+        }
+
+        public static string HandleSearchComponents(string connectionString, string[] parts)
+        {
+            string txtSearch = parts.Length > 1 ? parts[1] : null;
+            string filter = txtSearch != null ? parts[2] : null;
+            string check = parts.Length > 3 ? parts[3] : "0";
+
+            string query = "SELECT * FROM Components";
+            var parameters = new List<SqlParameter>();
+            if (!string.IsNullOrEmpty(txtSearch))
+            {
+                query += @"WHERE Id LIKE @search 
+                OR Name LIKE @search 
+                OR CAST(Purchase_Price AS NVARCHAR(MAX)) LIKE @search
+                OR CAST(Retail_Price AS NVARCHAR(MAX)) LIKE @search
+                OR CAST(Stock_Quantity AS NVARCHAR(MAX)) LIKE @search";
+                parameters.Add(new SqlParameter("@search", $"{txtSearch}"));
+            }
+
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                string SortDirection = check == "1" ? "DESC" : "ASC";
+                query += $" ORDER BY {filter} {SortDirection}";
+            }
+            else
+            {
+                query += " ORDER BY Id ASC";
+            }
+
+            var components = new List<Component>();
+
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (var cmd = new SqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddRange(parameters.ToArray());
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            components.Add(new Component
+                            {
+                                Id = reader.GetInt32(0),
+                                Name = reader.GetString(1),
+                                Type = reader.GetString(2),
+                                Purchase_Price = reader.GetDecimal(3),
+                                Retail_Price = reader.GetDecimal(4),
+                                Stock_Quantity = reader.GetInt32(5)
+                            });
+                        }
+                    }
+                }
+            }
+
+            return JsonConvert.SerializeObject(components);
         }
 
     }

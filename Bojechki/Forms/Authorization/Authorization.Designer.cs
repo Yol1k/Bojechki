@@ -75,11 +75,11 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(204, 294);
+            this.label3.Location = new System.Drawing.Point(204, 278);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(334, 13);
+            this.label3.Size = new System.Drawing.Size(269, 26);
             this.label3.TabIndex = 4;
-            this.label3.Text = "Если Вы не зарегистрированы, то сделайте это по кнопке ниже";
+            this.label3.Text = "Если Вы не зарегистрированы, то сделайте это по \r\nкнопке ниже";
             // 
             // register_btn
             // 
