@@ -30,17 +30,6 @@ namespace Bojechki
         private void Form1_Load(object sender, EventArgs e)
         {
             cb_tables.SelectedIndex = 0;
-            try
-            {
-                //string serverExePath = "Bojechki_server.exe";
-
-                //serverProcess = Process.Start(serverExePath);
-                //System.Threading.Thread.Sleep(500);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Не удалось запустить сервер: " + ex.Message);
-            }
         }
 
         private void btnLoadCatalogs_Click(object sender, EventArgs e)

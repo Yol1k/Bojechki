@@ -129,6 +129,7 @@ namespace Bojechki_server.Handlers
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"[ОШИБКА] HandleGetCatalogs: {ex.Message}");
                 return $"FAIL|{ex.Message}";
             }
         }

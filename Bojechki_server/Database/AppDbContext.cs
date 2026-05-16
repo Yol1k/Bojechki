@@ -13,12 +13,15 @@ namespace Bojechki_server.Database
         public DbSet<Catalog> Catalogs { get; set; }
         public DbSet<OrderComponent> OrderComponents { get; set; }
 
-        public static string dbPath = @"G:\Bojechki\database\божечки.mdf";
-        public string connectionString = $@"Data Source=(localdb)\v13.0;AttachDbFilename={dbPath};Integrated Security=True;";
-
+        private static string DbFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Database");
+        private static string MdfFile = Path.Combine(DbFolder, "божечки.mdf");
+        public string connectionString = $@"Data Source=(localdb)\v13.0;AttachDbFilename={MdfFile};Integrated Security=True;";
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(connectionString);
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer(connectionString);
+            }
         }
     }
 }

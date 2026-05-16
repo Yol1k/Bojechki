@@ -33,7 +33,7 @@
             this.desc_catalog = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.btn_add_catalog = new System.Windows.Forms.Button();
+            this.btn_edit_catalog = new System.Windows.Forms.Button();
             this.type_catalog = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.name_catalog = new System.Windows.Forms.TextBox();
@@ -81,15 +81,15 @@
             this.label2.TabIndex = 13;
             this.label2.Text = "Введите тип каталога";
             // 
-            // btn_add_catalog
+            // btn_edit_catalog
             // 
-            this.btn_add_catalog.Location = new System.Drawing.Point(208, 482);
-            this.btn_add_catalog.Name = "btn_add_catalog";
-            this.btn_add_catalog.Size = new System.Drawing.Size(284, 23);
-            this.btn_add_catalog.TabIndex = 12;
-            this.btn_add_catalog.Text = "Обновить";
-            this.btn_add_catalog.UseVisualStyleBackColor = true;
-            this.btn_add_catalog.Click += new System.EventHandler(this.btn_add_catalog_Click);
+            this.btn_edit_catalog.Location = new System.Drawing.Point(208, 482);
+            this.btn_edit_catalog.Name = "btn_edit_catalog";
+            this.btn_edit_catalog.Size = new System.Drawing.Size(284, 23);
+            this.btn_edit_catalog.TabIndex = 12;
+            this.btn_edit_catalog.Text = "Обновить";
+            this.btn_edit_catalog.UseVisualStyleBackColor = true;
+            this.btn_edit_catalog.Click += new System.EventHandler(this.btn_edit_catalog_Click);
             // 
             // type_catalog
             // 
@@ -131,7 +131,7 @@
             this.Controls.Add(this.desc_catalog);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.btn_add_catalog);
+            this.Controls.Add(this.btn_edit_catalog);
             this.Controls.Add(this.type_catalog);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.name_catalog);
@@ -150,7 +150,7 @@
         private System.Windows.Forms.TextBox desc_catalog;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button btn_add_catalog;
+        private System.Windows.Forms.Button btn_edit_catalog;
         private System.Windows.Forms.ComboBox type_catalog;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox name_catalog;

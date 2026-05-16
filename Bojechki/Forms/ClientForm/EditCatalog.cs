@@ -29,7 +29,7 @@ namespace Bojechki.Forms.ClientForm
             price_catalog.Text = catalog.Price.ToString();
         }
 
-        private void btn_add_catalog_Click(object sender, EventArgs e)
+        private void btn_edit_catalog_Click(object sender, EventArgs e)
         {
             string request = $"UPDATE_CATALOG|{catalog.Id}|{name_catalog.Text}|{type_catalog.SelectedItem}|{desc_catalog.Text}|{price_catalog.Text}";
             string response = ServerConnection.SendRequestToServer(request);
