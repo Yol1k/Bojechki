@@ -71,7 +71,7 @@
 ![IDEF3](Schemas/IDEF3.png)
 *Рис. 3 – Диаграмма IDEF3*
 ![DFD](Schemas/DFD.png)
-*Рис. 4 – Диаграмма БДDFD
+*Рис. 4 – Диаграмма DFD*
 ![UML Use Cases](Schemas/UML_Use_Cases.png)
 *Рис. 5 – Диаграмма UML Use Cases*
 ![Class Diagram](Schemas/Class_Diagram.png)
