@@ -5,9 +5,13 @@
 ## Интерфейс приложения
 
 ![Главное окно](Screenshots/main.png)
+*Рис. 1 – Главное окно приложения*
 ![Авторизация](Screenshots/login.png)
+*Рис. 2 – Окно авторизации*
 ![Регистрация](Screenshots/register.png)
+*Рис. 2 – Окно Регистрации*
 ![Сервер](Screenshots/server.png)
+*Рис. 2 – Окно консоли сервера*
 
 ## Функциональные возможности
 
@@ -42,7 +46,7 @@
 | Язык               | C# (.NET 4.6.1) |
 | ORM                | Entity Framework Core (3.1.32) |
 | База данных        | Microsoft SQL Server (LocalDB) (2016, 13.0) |
-| Тестирование       | xUnit (в процессе) |
+| Тестирование       | MSTest |
 | Оконный клиент     | Windows Forms |
 | Сетевое взаимодействие | TCP сокеты (библиотека `System.Net.Sockets`) |
 | Хеширование паролей | SHA256 |
@@ -60,13 +64,20 @@
 
 ## Диаграммы и схемы
 
-![БД окно](Cхемы и диаграммы/БД схема.png)
-![IDEF0](Cхемы и диаграммы/IDEF0 схема.png)
-![IDEF3](Cхемы и диаграммы/IDEF3 схема.png)
-![DFD](Cхемы и диаграммы/DFD схема.png)
-![UML Use Cases](Cхемы и диаграммы/UML Use Cases диаграмма.png)
-![Class Diagram](Cхемы и диаграммы/Class Diagram диаграмма.png)
-![Sequence Diagram](Cхемы и диаграммы/Sequence Diagram диаграмма.png)
+![БД окно](Schemas/DB.png)
+*Рис. 1 – Схема БД*
+![IDEF0](Schemas/IDEF0.png)
+*Рис. 2 – Диаграмма IDEF0*
+![IDEF3](Schemas/IDEF3.png)
+*Рис. 3 – Диаграмма IDEF3*
+![DFD](Schemas/DFD.png)
+*Рис. 4 – Диаграмма БДDFD
+![UML Use Cases](Schemas/UML_Use_Cases.png)
+*Рис. 5 – Диаграмма UML Use Cases*
+![Class Diagram](Schemas/Class_Diagram.png)
+*Рис. 6 – Диаграмма Class Diagram*
+![Sequence Diagram](Schemas/UML_Sequence_Diagram.png)
+*Рис. 7 – Диаграмма Sequence Diagram*
 
 ---
 
@@ -101,7 +112,7 @@
    - Клиент: `Bojechki\bin\Release\Bojechki.exe`
    - Сервер: `Bojechki_server\bin\Release\Bojechki_server.exe`
 4. Запустите сначала сервер, затем клиент (можно при помощи F5 в Visual Studio 2022).
-5. Для упрощения используйте прилагаемый файл `run.bat`.
+5. Для упрощения используйте прилагаемый файл `run.bat`. Он одновременно запускает сервер и клиент.
 
 > **Примечание:** Для работы требуется SQL Server LocalDB (устанавливается вместе с Visual Studio или отдельно).
 

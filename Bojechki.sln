@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.36324.18
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bojechki", "Bojechki\Bojechki.csproj", "{1B281978-1197-4727-A121-5CC40D335D7C}"
 EndProject
@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решен
 		Readme.md = Readme.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bojechki_tests", "Bojechki_tests\Bojechki_tests.csproj", "{443FC887-9F2D-4AA2-AEB7-097615BAF766}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bojechki_tests", "Bojechki_tests\Bojechki_tests.csproj", "{11B39B15-4516-4E71-8DE0-2D2D0625FCE4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,10 +28,10 @@ Global
 		{A22ADC8A-9F04-4854-8154-18232556F6E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A22ADC8A-9F04-4854-8154-18232556F6E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A22ADC8A-9F04-4854-8154-18232556F6E2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{443FC887-9F2D-4AA2-AEB7-097615BAF766}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{443FC887-9F2D-4AA2-AEB7-097615BAF766}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{443FC887-9F2D-4AA2-AEB7-097615BAF766}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{443FC887-9F2D-4AA2-AEB7-097615BAF766}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11B39B15-4516-4E71-8DE0-2D2D0625FCE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11B39B15-4516-4E71-8DE0-2D2D0625FCE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11B39B15-4516-4E71-8DE0-2D2D0625FCE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11B39B15-4516-4E71-8DE0-2D2D0625FCE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

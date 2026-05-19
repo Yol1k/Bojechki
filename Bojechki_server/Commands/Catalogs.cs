@@ -31,7 +31,7 @@ namespace Bojechki_server.Commands
     {
         public string Execute(AppDbContext db, string[] args)
         {
-            return DbTablesHandler.HandleUpdateCatalog(db.connectionString, args);
+            return DbTablesHandler.HandleDeleteCatalog(db.connectionString, args);
         }
     }
 }

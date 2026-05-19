@@ -15,7 +15,7 @@ namespace Bojechki_server.Database
 
         private static string DbFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Database");
         private static string MdfFile = Path.Combine(DbFolder, "божечки.mdf");
-        public string connectionString = $@"Data Source=(localdb)\v13.0;AttachDbFilename={MdfFile};Integrated Security=True;";
+        public string connectionString = $@"Data Source=(localdb)\MSSQLLocalDB;AttachDbFilename={MdfFile};Integrated Security=True;";
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)

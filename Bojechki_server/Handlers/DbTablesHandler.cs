@@ -293,7 +293,7 @@ namespace Bojechki_server.Handlers
 
             var components = new List<Component>();
 
-            using (var connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
                 using (var cmd = new SqlCommand(query, connection))
